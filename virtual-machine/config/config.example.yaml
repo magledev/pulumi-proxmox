@@ -1,0 +1,90 @@
+---
+resource_options:
+  retain_on_delete: true
+  ignore_changes:
+    - "disks"
+    - "cdrom"
+  depends_on: talos_iso
+
+file_download:
+  resource_name: "talos-metal-amd64-secureboot-v1.7.5-iso"
+  checksum: ""
+  checksum_algorithm: ""
+  overwrite: true
+  overwrite_unmanaged: true
+  content_type: "iso"
+  datastore_id: "local"
+  file_name: "talos-metal-amd64-secureboot-v1.7.5.iso"
+  node_name: "atlas"
+  url: "https://factory.talos.dev/image/f683308f6e49ec36d715bd41c90d800910552d8cbc015c8363ec350594535fa1/v1.7.5/metal-amd64-secureboot.iso"
+
+virtual_machine:
+  name: "talos-node"
+  resource_name: "talos-virtual-machine"
+  description: "Managed by Pulumi"
+  count: 6
+  node_name: "atlas"
+  vm_id: 671
+  tags:
+    - "pulumi"
+    - "talos"
+    - "iaC"
+    - "k8s"
+  acpi: true
+  agent:
+    enabled: true
+    trim: true
+  bios: "ovmf"
+  machine_type: "q35"
+  cpu:
+    architecture: "x86_64"
+    type: "x86-64-v2-AES"
+    cores: 2
+    sockets: 1
+  cdrom:
+    enabled: true
+    interface: "ide0"
+    file_id: ""
+  boot_orders:
+    - "scsi0"
+    - "ide0"
+  scsi_hardware: "virtio-scsi-single"
+  disks:
+    - disk0:
+        interface: "scsi0"
+        datastore_id: "nvme"
+        size: 10
+        file_format: "raw"
+        cache: "none"
+        iothread: true
+        ssd: true
+        discard: "on"
+    - disk1:
+        interface: "scsi1"
+        datastore_id: "nvme"
+        size: 20
+        file_format: "raw"
+        cache: "none"
+        iothread: true
+        ssd: true
+        discard: "on"
+  efi_disk:
+    datastore_id: "nvme"
+    file_format: "raw"
+    pre_enrolled_keys: false
+    type: "4m"
+  memory:
+    dedicated: 4096
+  network_devices:
+    - net0:
+        bridge: "vmbr0"
+        model: "virtio"
+        vlan_id: 20
+  vga:
+    type: "std"
+  operating_system:
+    type: "l26"
+  on_boot: false
+  started: true
+  reboot: false
+  stop_on_destroy: true

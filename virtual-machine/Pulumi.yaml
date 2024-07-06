@@ -1,0 +1,6 @@
+name: proxmox-virtual-machine
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: Python Pulumi program to instantiate virtual machines on Proxmox VE
