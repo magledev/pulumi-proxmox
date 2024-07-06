@@ -14,7 +14,7 @@ provider = proxmoxve.Provider(
     password=pulumi_config.require("proxmox_password"),
 )
 
-config_path = "./values/"
+config_path = "./config/"
 
 
 def load_yaml_config(config_path):
