@@ -28,7 +28,7 @@ virtual_machine:
   tags:
     - "pulumi"
     - "talos"
-    - "iaC"
+    - "iac"
     - "k8s"
   acpi: true
   agent:
